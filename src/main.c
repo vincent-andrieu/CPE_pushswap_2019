@@ -10,23 +10,18 @@
 #include "my.h"
 #include "pushswap.h"
 
-#include <stdio.h>
-#include <time.h>
-
-static int *args_to_int_tab(int argc, char **argv, int temp)
+static int *args_to_int_tab(int argc, char **argv)
 {
-    int *tab = malloc(sizeof(int) * (temp));//(argc - 1));
+    int *tab = malloc(sizeof(int) * (argc - 1));
 
     if (tab == NULL)
         return NULL;
-    for (int i = 1; i < temp; i++) {
-        /*if (!my_str_isnum(argv[i][0] == '-' ? argv[i] + 1 : argv[i])) {
+    for (int i = 1; i < argc; i++) {
+        if (!my_str_isnum(argv[i][0] == '-' ? argv[i] + 1 : argv[i])) {
             my_put_error_str(MSG_ARG_NOT_INTEGER);
             return NULL;
-        }*/
-        do
-            tab[i - 1] = rand() % 1000000;//my_getnbr(argv[i]);
-        while (tab[i - 1] == 0);
+        }
+        tab[i - 1] = my_getnbr(argv[i]);
     }
     return tab;
 }
@@ -113,7 +108,6 @@ static int pushswap(list_t *list_a)
 
 int main(int argc, char **argv)
 {
-    srand(time(NULL));
     list_t *list = malloc(sizeof(list_t));
 
     if (list == NULL)
@@ -122,12 +116,11 @@ int main(int argc, char **argv)
         my_put_error_str(MSG_NOT_ENOUGH_ARGS);
         return EXIT_NOT_ENOUGH_ARGS;
     }
-    int temp = my_getnbr(argv[1]);
-    list->tab = args_to_int_tab(argc, argv, temp);
+    list->tab = args_to_int_tab(argc, argv);
     if (list->tab == NULL) {
         free(list);
         return EXIT_FAILURE;
     }
-    list->size = temp;//argc - 1;
+    list->size = argc - 1;
     return pushswap(list);
 }
