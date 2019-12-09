@@ -34,13 +34,13 @@ static void free_lists(list_t *list_a, list_t *list_b)
     free(list_b);
 }
 
-static int get_index_biggest(list_t *list, int biggest, int i)
+static int get_index_smallest(list_t *list, int smallest, int i)
 {
     if (i >= list->size)
-        return biggest;
-    if (list->tab[i] > list->tab[biggest])
-        biggest = i;
-    return get_index_biggest(list, biggest, i + 1);
+        return smallest;
+    if (list->tab[i] < list->tab[smallest])
+        smallest = i;
+    return get_index_smallest(list, smallest, i + 1);
 }
 
 static void concat_result(char *result, int *result_len, char const *str,
@@ -49,11 +49,15 @@ static void concat_result(char *result, int *result_len, char const *str,
     for (int i = 0; i < str_len; i++)
         (result + *result_len)[i] = str[i];
     *result_len += str_len;
+    if (*result_len + str_len >= 1999990) {
+        write(1, result, *result_len);
+        *result_len = 0;
+    }
 }
 
 static int do_swap(list_t *list_a, list_t *list_b)
 {
-    int biggest;
+    int smallest;
     bool first = true;
     char *result = malloc(sizeof(char) * 2000000);
     int result_len = 0;
@@ -61,23 +65,19 @@ static int do_swap(list_t *list_a, list_t *list_b)
     if (result == NULL)
         return EXIT_FAILURE;
     while (list_a->size > 0) {
-        biggest = get_index_biggest(list_a, 0, 1);
-        if (biggest > list_a->size / 2)
-            for (int i = list_a->size; i > biggest; i--) {
+        smallest = get_index_smallest(list_a, 0, 1);
+        if (smallest > list_a->size / 2)
+            for (int i = list_a->size; i > smallest; i--) {
                 concat_result(result, &result_len, rra(list_a), 3);
                 concat_result(result, &result_len, " ", 1);
             }
         else
-            for (int i = 0; i < biggest; i++) {
+            for (int i = 0; i < smallest; i++) {
                 concat_result(result, &result_len, ra(list_a), 2);
                 concat_result(result, &result_len, " ", 1);
             }
         concat_result(result, &result_len, pb(list_a, list_b), 2);
         concat_result(result, &result_len, " ", 1);
-        if (result_len > 1999990) {
-            write(1, result, result_len);
-            result_len = 0;
-        }
     }
     for (int i = list_b->size; i > 0; i--) {
         if (!first)
