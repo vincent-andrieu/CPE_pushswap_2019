@@ -6,6 +6,7 @@
 ##
 
 SRC =   src/main.c	\
+		src/list.c	\
 		src/operations.c
 
 OBJ =   $(SRC:.c=.o)

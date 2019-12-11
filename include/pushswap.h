@@ -31,6 +31,12 @@ typedef struct operations_s
     int len;
 } operations_t;
 
+list_t *args_to_list(int argc, char **argv, list_t *list);
+void free_list(list_t *list);
+void free_all(list_t *list_a, list_t *list_b, operations_t *operations);
+void rotate_list(list_t **list_a, operations_t *operations, int list_size);
+void concat_result(operations_t *operations, char const *str, int str_len);
+
 char *pa(list_t **list_a, list_t **list_b);
 char *pb(list_t **list_a, list_t **list_b);
 char *ra(list_t **list);
