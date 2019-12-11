@@ -27,7 +27,7 @@ static void print_operations(list_t *list_b, operations_t *operations)
 static int do_swap(list_t *list_a, list_t *list_b, int list_size,
                     operations_t *operations)
 {
-    operations->str = malloc(sizeof(char) * 2000000);
+    operations->str = malloc(sizeof(char) * MALLOC_SIZE_RESULT);
     operations->len = 0;
 
     if (operations->str == NULL)
@@ -58,7 +58,7 @@ void concat_result(operations_t *operations, char const *str, int str_len)
     for (int i = 0; i < str_len; i++)
         (operations->str + operations->len)[i] = str[i];
     operations->len += str_len;
-    if (operations->len + str_len >= 1999990) {
+    if (operations->len + str_len >= MALLOC_SIZE_RESULT - 5) {
         write(1, operations->str, operations->len);
         operations->len = 0;
     }
