@@ -9,15 +9,26 @@
 #include "my.h"
 #include "pushswap.h"
 
-char *pa(list_t **list_a, list_t **list_b)
+char *ra(list_t **list)
 {
-    (*list_a)->previous = *list_b;
-    (*list_b)->last = (*list_a)->last;
-    (*list_b)->next->previous = NULL;
-    *list_b = (*list_b)->next;
-    (*list_a)->previous->next = *list_a;
-    *list_a = (*list_a)->previous;
-    return OPE_PA;
+    *list = (*list)->next;
+    (*list)->previous->next = NULL;
+    (*list)->previous->previous = *((*list)->last);
+    (*((*list)->last))->next = (*list)->previous;
+    (*list)->previous = NULL;
+    (*(*list)->last) = (*((*list)->last))->next;
+    return OPE_RA;
+}
+
+char *rra(list_t **list)
+{
+    (*((*list)->last))->previous->next = NULL;
+    (*((*list)->last))->next = *list;
+    (*list)->previous = *((*list)->last);
+    *((*list)->last) = (*((*list)->last))->previous;
+    *list = (*list)->previous;
+    (*list)->previous = NULL;
+    return OPE_RRA;
 }
 
 char *pb(list_t **list_a, list_t **list_b)

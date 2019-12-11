@@ -6,10 +6,7 @@
 ##
 
 SRC =   src/main.c	\
-		src/operations_p.c	\
-		src/operations_r.c	\
-		src/operations_rr.c	\
-		src/operations_s.c
+		src/operations.c
 
 OBJ =   $(SRC:.c=.o)
 
