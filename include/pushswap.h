@@ -25,6 +25,12 @@ typedef struct list_s
     struct list_s *previous;
 } list_t;
 
+typedef struct operations_s
+{
+    char *str;
+    int len;
+} operations_t;
+
 char *pa(list_t **list_a, list_t **list_b);
 char *pb(list_t **list_a, list_t **list_b);
 char *ra(list_t **list);
