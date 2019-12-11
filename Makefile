@@ -32,7 +32,4 @@ fclean: clean
 
 re: fclean all
 
-run: all
-	./$(NAME) 42 28 24 48 1 25 7 18 1 0 5 28 45 -34 -89
-
 .PHONY: all clean fclean
