@@ -5,7 +5,7 @@
 ** pushswap functions
 */
 
-#include "my.h"
+/*#include "my.h"
 #include "pushswap.h"
 
 void sa(list_t *list)
@@ -29,4 +29,4 @@ void sc(list_t *list_a, list_t *list_b)
         my_swap(&list_a->tab[0], &list_a->tab[1]);
     if (list_b->size >= 2)
         my_swap(&list_b->tab[0], &list_b->tab[1]);
-}
+}*/
