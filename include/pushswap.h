@@ -13,7 +13,7 @@
 #define MSG_NOT_ENOUGH_ARGS "Not enough arguments\n"
 #define EXIT_NOT_ENOUGH_ARGS 84
 #define EXIT_SUCCESS 0
-#define MALLOC_SIZE_RESULT 2000000
+#define MALLOC_SIZE_RESULT 50000000
 
 #define OPE_PA "pa"
 #define OPE_PB "pb"
