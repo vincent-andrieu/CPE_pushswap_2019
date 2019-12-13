@@ -39,18 +39,19 @@ static int do_swap(list_t *list_a, list_t *list_b, int list_size,
     }
     print_operations(list_b, operations);
     free_all(list_a, list_b, operations);
+    my_putchar('\n');
     return EXIT_SUCCESS;
 }
 
 static int pushswap(list_t *list_a, int argc)
 {
     list_t *list_b = NULL;
-    int exit_value;
 
     if (list_a == NULL)
         return EXIT_FAILURE;
-    exit_value = do_swap(list_a, list_b, argc, malloc(sizeof(operations_t)));
-    return exit_value;
+    if (is_sorted(list_a->next, list_a->value))
+        return EXIT_SUCCESS;
+    return do_swap(list_a, list_b, argc, malloc(sizeof(operations_t)));
 }
 
 void concat_result(operations_t *operations, char const *str, int str_len)

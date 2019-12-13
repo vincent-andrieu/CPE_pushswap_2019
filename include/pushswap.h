@@ -5,6 +5,8 @@
 ** pushswap header
 */
 
+#include <stdbool.h>
+
 #ifndef PUSHSWAP_H
 #define PUSHSWAP_H
 
@@ -37,6 +39,7 @@ void free_list(list_t *list);
 void free_all(list_t *list_a, list_t *list_b, operations_t *operations);
 void rotate_list(list_t **list_a, operations_t *operations, int list_size);
 void concat_result(operations_t *operations, char const *str, int str_len);
+bool is_sorted(list_t *list, int last_value);
 
 char *pa(list_t **list_a, list_t **list_b);
 char *pb(list_t **list_a, list_t **list_b);

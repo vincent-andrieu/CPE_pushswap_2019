@@ -6,7 +6,6 @@
 */
 
 #include <stdlib.h>
-#include "my.h"
 #include "pushswap.h"
 
 char *ra(list_t **list)
@@ -48,4 +47,31 @@ char *pb(list_t **list_a, list_t **list_b)
         (*list_a)->previous = NULL;
     }
     return OPE_PB;
+}
+
+static int get_smallest(list_t *list, int small_val, int small_i, int index)
+{
+    if (list == NULL)
+        return small_i;
+    if (list->value < small_val) {
+        small_i = index;
+        small_val = list->value;
+    }
+    return get_smallest(list->next, small_val, small_i, index + 1);
+}
+
+void rotate_list(list_t **list_a, operations_t *operations, int list_size)
+{
+    int smallest = get_smallest((*list_a)->next, (*list_a)->value, 1, 2);
+
+    if (smallest > list_size / 2)
+        for (int i = list_size; i >= smallest; i--) {
+            concat_result(operations, rra(list_a), 3);
+            concat_result(operations, " ", 1);
+        }
+    else
+        for (int i = 1; i < smallest; i++) {
+            concat_result(operations, ra(list_a), 2);
+            concat_result(operations, " ", 1);
+        }
 }
