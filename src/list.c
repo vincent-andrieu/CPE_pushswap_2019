@@ -18,7 +18,7 @@ list_t *args_to_list(int argc, char **argv, list_t *list)
     if (last_list == NULL)
         return NULL;
     *last_list = NULL;
-    for (int i = 1; i < argc; i++, list = temp) {
+    for (int i = argc - 1; i > 0; i--, list = temp) {
         temp = malloc(sizeof(list_t));
         if (temp == NULL
         || !my_str_isnum(argv[i][0] == '-' ? argv[i] + 1 : argv[i]))
@@ -56,7 +56,7 @@ bool is_sorted(list_t *list, int last_value)
         my_putchar('\n');
         return true;
     }
-    if (list->value > last_value)
+    if (list->value < last_value)
         return false;
     return is_sorted(list->next, list->value);
 }
