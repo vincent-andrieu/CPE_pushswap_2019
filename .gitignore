@@ -9,5 +9,6 @@ vgcore.*
 test.c
 test
 *.sublime-*
+*.drawio
 unit_tests
 push_swap
