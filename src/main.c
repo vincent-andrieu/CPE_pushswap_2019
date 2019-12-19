@@ -24,12 +24,15 @@ static void print_operations(list_t *list_b, operations_t *operations)
     write(1, operations->str, operations->len);
 }
 
-static int do_swap(list_t *list_a, list_t *list_b, int list_size,
-                    operations_t *operations)
+static int pushswap(list_t *list_a, int list_size)
 {
+    list_t *list_b = NULL;
+    operations_t *operations = malloc(sizeof(operations_t));
+
+    if (operations == NULL)
+        return EXIT_FAILURE;
     operations->str = malloc(sizeof(char) * MALLOC_SIZE_RESULT);
     operations->len = 0;
-
     if (operations->str == NULL)
         return EXIT_FAILURE;
     for (; list_size > 1; list_size--) {
@@ -41,17 +44,6 @@ static int do_swap(list_t *list_a, list_t *list_b, int list_size,
     free_all(list_a, list_b, operations);
     my_putchar('\n');
     return EXIT_SUCCESS;
-}
-
-static int pushswap(list_t *list_a, int argc)
-{
-    list_t *list_b = NULL;
-
-    if (list_a == NULL)
-        return EXIT_FAILURE;
-    if (is_sorted(list_a->next, list_a->value))
-        return EXIT_SUCCESS;
-    return do_swap(list_a, list_b, argc, malloc(sizeof(operations_t)));
 }
 
 void concat_result(operations_t *operations, char const *str, int str_len)
@@ -67,14 +59,16 @@ void concat_result(operations_t *operations, char const *str, int str_len)
 
 int main(int argc, char **argv)
 {
-    list_t *list;
+    list_t *list_a;
 
     if (argc <= 1) {
         my_put_error_str(MSG_NOT_ENOUGH_ARGS);
         return EXIT_NOT_ENOUGH_ARGS;
     }
-    list = args_to_list(argc, argv, NULL);
-    if (list == NULL)
+    list_a = args_to_list(argc, argv, NULL);
+    if (list_a == NULL)
         return EXIT_FAILURE;
-    return pushswap(list, argc - 1);
+    if (is_sorted(list_a->next, list_a->value))
+        return EXIT_SUCCESS;
+    return pushswap(list_a, argc - 1);
 }
