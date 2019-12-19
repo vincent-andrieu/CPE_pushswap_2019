@@ -68,7 +68,10 @@ int main(int argc, char **argv)
     list_a = args_to_list(argc, argv, NULL);
     if (list_a == NULL)
         return EXIT_FAILURE;
-    if (is_sorted(list_a->next, list_a->value))
+    if (is_sorted(list_a->next, list_a->value)) {
+        free(list_a->last);
+        free_list(list_a);
         return EXIT_SUCCESS;
+    }
     return pushswap(list_a, argc - 1);
 }
